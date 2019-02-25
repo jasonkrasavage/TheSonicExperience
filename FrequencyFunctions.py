@@ -1,7 +1,9 @@
-# PATRICK TUMULTY
-# Fed 23, 2019
 import numpy as np
 import math
+import random 
+
+# PATRICK TUMULTY
+# Last Updated: Fed 25, 2019
 
 
 def Create12TETChromatic(frequency):
@@ -42,6 +44,14 @@ def StandardMajScale(TETArray):
         scale = freqArray[i]
         EightSteps = np.append(EightSteps, scale)
     return EightSteps
+
+def calculateCents(referenceScale, newScale):
+    centsList = []
+    for i in range(len(referenceScale)):
+        ratio = newScale[i] / referenceScale[i]
+        cents = round(((math.log(ratio) / math.log(2)) * 1200), 2)
+        centsList.append(cents)
+    return centsList
 
 
 def SecondLoop(frequency, newTET):
@@ -186,12 +196,64 @@ def genBlock(frequencyArray, chordNum):
     SendValues.append(Chord)
     SendValues.append(Bass)
     return SendValues
+
+
+def CompAlgorithm(startingFreq):
+    a = Create12TETChromatic(startingFreq)
+    b = StandardMajScale(a)
+    loop = 0
+    for i in range(8):
+        block = genBlock(b, (i + 1))
+        if i == 0:
+            one = block
+        if i == 1:
+            two = block
+        if i == 2:
+            three = block
+        if i == 3:
+            four = block
+        if i == 4:
+            five = block
+        if i == 5:
+            six = block
+        if i == 6:
+            sev = block
+        if i == 7:
+            octave = block
+    while loop < 10: 
+        val = random.randint(1, 8)
+        if val == 1:
+            print(one, "ONE") 
+        if val == 2:
+            print(two, "TWO") 
+        if val == 1:
+            print(three) 
+        if val == 2:
+            print(four) 
+        if val == 1:
+            print(five) 
+        if val == 2:
+            print(six) 
+        if val == 2:
+            print(sev) 
+        if val == 2:
+            print(octave) 
+        loop += 1
+
+        
+
   
 # ----------------------------
 
-a = Create12TETChromatic(440)
-b = StandardMajScale(a)
-c = genBlock(b, 5) #the scale i created above and the fifth chord in the scale
-print(c)
+#CompAlgorithm(440)
+
+
+#a = Create12TETChromatic(440)
+#b = StandardMajScale(a)
+#c = TETMajScale(440, 9)
+#d = calculateCents(b, c)
+
+#c = genBlock(b, 5) #the scale i created above and the fifth chord in the scale
+#print(c)
 
 
