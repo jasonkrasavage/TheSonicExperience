@@ -245,15 +245,5 @@ def CompAlgorithm(startingFreq):
   
 # ----------------------------
 
-#CompAlgorithm(440)
-
-
-#a = Create12TETChromatic(440)
-#b = StandardMajScale(a)
-#c = TETMajScale(440, 9)
-#d = calculateCents(b, c)
-
-#c = genBlock(b, 5) #the scale i created above and the fifth chord in the scale
-#print(c)
 
 
