@@ -37,10 +37,13 @@ def addToList():
 
 
 
+variable = StringVar()
+
+ScaleOption =   OptionMenu(inputFrame, variable, "TET", "Just", "Pythagorean")
 freqLabel =     Label(inputFrame, text="Frequency:")
-octLabel =      Label(inputFrame, text="Octave Divider:")
-numEntry =      Entry(inputFrame)
-OctaveDivider = Entry(inputFrame)
+scaleLabel =    Label(inputFrame, text="Choose Scale:")
+numEntry =      Entry(inputFrame, width=10)
+OctaveDivider = Entry(inputFrame, width=10)
 showButton =    Button(inputFrame, text="Show", command=addToList)
 
 majScale = Listbox(freqList, width=10)
@@ -50,10 +53,11 @@ centsOff = Listbox(freqList, width=10)
 # ---------------------- Buttons, Entry, and Lebel pack 
 
 showButton.grid (row=0, columnspan=3)
-freqLabel.grid  (row=1, column=0)
-octLabel.grid   (row=2, column=0)
-numEntry.grid   (row=1, column=1)
-OctaveDivider.grid(row=2, column=1)
+freqLabel.grid(row=1, column=0)
+scaleLabel.grid(row=2, column=0)
+numEntry.grid(row=1, column=1)
+OctaveDivider.grid(row=3, column=1)
+ScaleOption.grid(row=2, column=1)
 
 # ---------------------- Frequency Scales
 

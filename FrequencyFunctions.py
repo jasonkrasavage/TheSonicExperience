@@ -4,7 +4,7 @@ import random
 
 # PATRICK TUMULTY
 # Last Updated: Fed 25, 2019
-
+ 
 
 def Create12TETChromatic(frequency):
     """creates a 12 tone even tempered scale with any starting pitch. returns an array"""
@@ -240,8 +240,7 @@ def CompAlgorithm(startingFreq):
             print(octave) 
         loop += 1
 
-        
-
+    
   
 # ----------------------------
 
