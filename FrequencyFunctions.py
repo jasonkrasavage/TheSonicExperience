@@ -3,7 +3,7 @@ import math
 import random 
 
 # PATRICK TUMULTY
-# Last Updated: Fed 25, 2019
+# Last Updated: Fed 28, 2019
  
 
 def Create12TETChromatic(frequency):
@@ -33,19 +33,37 @@ def TETChromaticScale(frequency, octaveDivider):
 
 # Functions used TETMajScale
 
-
-def StandardMajScale(TETArray):
-    """Takes an array of frequencies of a 12 tone chromatic scale and returns a traditional
-    major scale"""
+def StandardMajScale(frequency):
+    """Takes one arguement, frequency. Returns an array of 8 frequencies from 12 TET chromatic scale"""
     EightSteps = np.array([])
-    freqArray = TETArray
+    freqArray = Create12TETChromatic(frequency)
     steps = (0, 2, 4, 5, 7, 9, 11, 12)
     for i in steps:
         scale = freqArray[i]
         EightSteps = np.append(EightSteps, scale)
     return EightSteps
 
+def JustScale(frequency):
+    """Takes in a frequency. Returns an array of 8 frequencies in the Just scale"""
+    EightSteps = []
+    ratios = [1, (9/8), (5/4), (4/3), (3/2), (5/3), (15/8), 2]
+    for i in range(len(ratios)):
+        note = round(frequency * ratios[i],2)
+        EightSteps.append(note)
+    return EightSteps
+
+def PythagoreanScale(frequency):
+    """Takes in a frequency. Returns an array of 8 frequencies in the Pythagorean scale"""
+    EightSteps = []
+    ratios = [1, (9/8), (81/64), (4/3), (3/2), (27/16), (243/128), 2]
+    for i in range(len(ratios)):
+        note = round(frequency * ratios[i],2)
+        EightSteps.append(note)
+    return EightSteps
+
+
 def calculateCents(referenceScale, newScale):
+    """Takes two arrays of frequencies and calculates the cents difference. Returns 8 values in a list."""
     centsList = []
     for i in range(len(referenceScale)):
         ratio = newScale[i] / referenceScale[i]
@@ -55,7 +73,7 @@ def calculateCents(referenceScale, newScale):
 
 
 def SecondLoop(frequency, newTET):
-    """This function is used only in conjunction with DetermineScale()"""
+    """This function is used only in conjunction with TETMajScale()"""
     absList = []
     minimum = 0
     for i in range(len(newTET)):
@@ -69,11 +87,8 @@ def SecondLoop(frequency, newTET):
 def TETMajScale(frequency, octaveDivider):
     """Cross references a traditional major scale with a new TET chromatic scale.
     Returns an array of 8 frequencies."""
-    TTET = Create12TETChromatic(frequency)
-    standard = StandardMajScale(TTET)
+    standard = StandardMajScale(frequency)
     newTET = TETChromaticScale(frequency, octaveDivider)
-    print(standard)
-    print(newTET)
     newScale = np.array([])
     for i in range(len(standard)):
         freq = SecondLoop(standard[i], newTET)
@@ -198,12 +213,10 @@ def genBlock(frequencyArray, chordNum):
     return SendValues
 
 
-def CompAlgorithm(startingFreq):
-    a = Create12TETChromatic(startingFreq)
-    b = StandardMajScale(a)
+def CompAlgorithm(frequencyArray):
     loop = 0
     for i in range(8):
-        block = genBlock(b, (i + 1))
+        block = genBlock(frequencyArray, (i + 1))
         if i == 0:
             one = block
         if i == 1:
@@ -224,19 +237,19 @@ def CompAlgorithm(startingFreq):
         val = random.randint(1, 8)
         if val == 1:
             print(one, "ONE") 
-        if val == 2:
+        elif val == 2:
             print(two, "TWO") 
-        if val == 1:
+        elif val == 3:
             print(three) 
-        if val == 2:
+        elif val == 4:
             print(four) 
-        if val == 1:
+        elif val == 5:
             print(five) 
-        if val == 2:
+        elif val == 6:
             print(six) 
-        if val == 2:
+        elif val == 7:
             print(sev) 
-        if val == 2:
+        elif val == 8:
             print(octave) 
         loop += 1
 
