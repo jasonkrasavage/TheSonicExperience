@@ -24,6 +24,15 @@ thisProcess.addOSCRecvFunc(f);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
+(
+OSCdef(\dinger,
+    {
+        |msg|
+        {Pulse.ar(msg[1],rrand(0.01,0.5),0.3)!2 * EnvGen.ar(Env.perc,doneAction:2)}.play
+}, '/test')
+)
+
+
 // stop posting.
 thisProcess.removeOSCRecvFunc(f);
 

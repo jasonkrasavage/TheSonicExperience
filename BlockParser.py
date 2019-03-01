@@ -1,5 +1,16 @@
-import FrequencyFunctions
+import FrequencyFunctions as ff
 from pythonosc import udp_client
+
+#CompAlgorithm(440)
+
+
+a = ff.Create12TETChromatic(440)
+b = ff.StandardMajScale(a)
+#c = TETMajScale(440, 9)
+#d = calculateCents(b, c)
+
+c = ff.genBlock(b, 5) #the scale i created above and the fifth chord in the scale
+#print(c)
 
 def osc_setup(ip_address="127.0.0.1", port_number=57120):
     return udp_client.SimpleUDPClient(ip_address, port_number)
@@ -21,4 +32,6 @@ def block_parser(a, client):
 
 if __name__ == "__main__":
     client = osc_setup()
-    block_parser(FrequencyFunctions.c, client)
+    #block_parser(c, client)
+    while True:
+        client.send_message("/test", float(input()))
