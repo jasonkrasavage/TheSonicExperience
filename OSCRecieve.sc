@@ -23,12 +23,22 @@ thisProcess.addOSCRecvFunc(f);
 );
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
+(
+SynthDef(\sines, {arg out = 0, freq = 440, release_dur, gate =1, amp = 0.2;
+    var sines, env;
+    env = EnvGen.kr(Env.asr(0.01, amp, release_dur), gate, doneAction:2);
+    sines = SinOsc.ar(freq, 0, 2.2);
+    Out.ar(out, sines * env);
+}).add;
+)
 
 (
-OSCdef(\dinger,
+OSCdef.new(\sines,
     {
+
         |msg|
-        {Pulse.ar(msg[1],rrand(0.01,0.5),0.3)!2 * EnvGen.ar(Env.perc,doneAction:2)}.play
+		~test.free;
+		~test = Synth.new(\sines, [\freq, msg[1]]);
 }, '/test')
 )
 
@@ -37,3 +47,12 @@ OSCdef(\dinger,
 thisProcess.removeOSCRecvFunc(f);
 
 o.free;
+
+
+Select.kr(
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+~left = {SinOsc.ar(80)}
+~right = {SinOsc.ar(80.02)}
+{[~left,~right]}.play;
