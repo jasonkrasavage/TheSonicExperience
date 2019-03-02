@@ -30,9 +30,20 @@ def block_parser(a, client):
     print(bass)
     return
 
+def triad_send(array, client):
+    #a is a 1 dimensional array with only three values
+    #if more than 3 values are in the array, the rest is ignored
+    client.send_message("/triad", array)
+    #possiblity of adding error handling to return function or to send data elsewhere or external analysis
+    return 
+
+def tone_send(tone, client):
+    #tone is a single floating point integer
+    client.send_message("/tone", float(tone))
+    #possiblity of adding error handling to return function or to send data elsewhere or external analysis
+    return
+
 if __name__ == "__main__":
     client = osc_setup()
-    #block_parser(c, client)
-    #while True:
-        #client.send_message("/test", float(input()))
-    client.send_message("/test", [100, 120, 150])
+    triad_send([0,200,400], client)
+    tone_send(700, client)
