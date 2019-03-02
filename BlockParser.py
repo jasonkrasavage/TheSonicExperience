@@ -33,5 +33,6 @@ def block_parser(a, client):
 if __name__ == "__main__":
     client = osc_setup()
     #block_parser(c, client)
-    while True:
-        client.send_message("/test", float(input()))
+    #while True:
+        #client.send_message("/test", float(input()))
+    client.send_message("/test", [100, 120, 150])

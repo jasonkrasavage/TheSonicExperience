@@ -37,11 +37,14 @@ OSCdef.new(\sines,
     {
 
         |msg|
-		~test.free;
-		~test = Synth.new(\sines, [\freq, msg[1]]);
+		~test1.free;
+		~test2.free;
+		~test3.free;
+		~test1 = Synth.new(\sines, [\freq, msg[1]]);
+		~test2 = Synth.new(\sines, [\freq, msg[2]]);
+		~test3 = Synth.new(\sines, [\freq, msg[3]]);
 }, '/test')
 )
-
 
 // stop posting.
 thisProcess.removeOSCRecvFunc(f);
@@ -49,7 +52,6 @@ thisProcess.removeOSCRecvFunc(f);
 o.free;
 
 
-Select.kr(
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
