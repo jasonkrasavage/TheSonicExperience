@@ -33,6 +33,15 @@ SynthDef(\sines, {arg out = 0, freq = 440, release_dur, gate =1, amp = 0.2;
 }).add;
 )
 
+//second variation of sines working with envelopes to avoid popping. close but no cigar right now. It's better but the pop is definitely coming from ".free" in the oscdefs below. Need to sort that out
+(
+SynthDef("sinesTest", { |freq, out, gate = 1, attackTime = 1, decayTime = 1 sustainLevel = 0.5, releaseTime = 1|
+    var env = Env.adsr(attackTime, decayTime, sustainLevel, releaseTime);
+    var gen = EnvGen.kr(env, gate, doneAction: Done.freeSelf);
+    Out.ar(out, SinOsc.ar(freq, 0, 0.5) * gen)
+}).add
+);
+
 (
 //OSC definition for handling triads. This def looks for messages sent from the "triad_send" python function
 //will sustain until a new traid is sent
@@ -50,11 +59,11 @@ OSCdef.new(\sines,
 (
 //OSC definition for handling a single tone. This def looks for messages sent from the "tone_send" python function
 //will sustain until a new tone is sent
-OSCdef.new(\sines,
+OSCdef.new(\sinesTest,
     {
 
         |msg|
 		~tone.free;
-		~tone = Synth.new(\sines, [\freq, msg[1]]);
+		~tone = Synth.new(\sinesTest, [\freq, msg[1]]);
 }, '/tone')
 )

@@ -1,6 +1,6 @@
 import FrequencyFunctions as ff
 from pythonosc import udp_client
-
+'''
 #CompAlgorithm(440)
 
 
@@ -12,8 +12,7 @@ b = ff.StandardMajScale(a)
 c = ff.genBlock(b, 5) #the scale i created above and the fifth chord in the scale
 #print(c)
 
-def osc_setup(ip_address="127.0.0.1", port_number=57120):
-    return udp_client.SimpleUDPClient(ip_address, port_number)
+
 
 def block_parser(a, client):
     melody = a[0]
@@ -29,7 +28,11 @@ def block_parser(a, client):
     print("/bass", end=" ")
     print(bass)
     return
+'''
 
+def osc_setup(ip_address="127.0.0.1", port_number=57120):
+    return udp_client.SimpleUDPClient(ip_address, port_number)
+    
 def triad_send(array, client):
     #a is a 1 dimensional array with only three values
     #if more than 3 values are in the array, the rest is ignored
