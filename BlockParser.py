@@ -1,18 +1,19 @@
 import FrequencyFunctions as ff
 from pythonosc import udp_client
-'''
-#CompAlgorithm(440)
 
+#ff.CompAlgorithm(440)
 
+print("a:")
 a = ff.Create12TETChromatic(440)
+print("b:")
 b = ff.StandardMajScale(a)
-#c = TETMajScale(440, 9)
+print("c:")
+c = ff.TETMajScale(440, 22)
 #d = calculateCents(b, c)
 
-c = ff.genBlock(b, 5) #the scale i created above and the fifth chord in the scale
-#print(c)
+#c = ff.genBlock(b, 5) #the scale i created above and the fifth chord in the scale
 
-
+'''
 
 def block_parser(a, client):
     melody = a[0]
@@ -28,11 +29,12 @@ def block_parser(a, client):
     print("/bass", end=" ")
     print(bass)
     return
-'''
+
 
 def osc_setup(ip_address="127.0.0.1", port_number=57120):
     return udp_client.SimpleUDPClient(ip_address, port_number)
     
+
 def triad_send(array, client):
     #a is a 1 dimensional array with only three values
     #if more than 3 values are in the array, the rest is ignored
@@ -50,3 +52,4 @@ if __name__ == "__main__":
     client = osc_setup()
     triad_send([0,200,400], client)
     tone_send(700, client)
+'''

@@ -1,13 +1,14 @@
 from tkinter import*
 import FrequencyFunctions as ff
 import tkinter.messagebox
+from pythonosc import udp_client
 
 # Patrick Tumulty 
 # Last Updated: Feb. 28 2019
 
 # ---------- instantiate our window ------------------
 
-#root = Tk()
+root = Tk()
 root.title("TemperMental")
 root.resizable(width=False, height=False)
 
@@ -100,29 +101,79 @@ def addToList():
         for i in range(len(cents)):
             val = cents[i]
             centsOff.insert(END, int(val))
+
+#a = ff.Create12TETChromatic(440)
+#b = ff.StandardMajScale(a)
+
+b = ff.TETMajScale(440, 29)
+
+def one_chord():
+    client = udp_client.SimpleUDPClient("127.0.0.1", 57120)
+    c = ff.genBlock(b, 1)
+    triad = c[1]
+    client.send_message("/triad", triad[1:])
+def two_chord():
+    client = udp_client.SimpleUDPClient("127.0.0.1", 57120)
+    c = ff.genBlock(b, 2)
+    triad = c[1]
+    client.send_message("/triad", triad[1:])
+def three_chord():
+    client = udp_client.SimpleUDPClient("127.0.0.1", 57120)
+    c = ff.genBlock(b, 3)
+    triad = c[1]
+    client.send_message("/triad", triad[1:])
+def four_chord():
+    client = udp_client.SimpleUDPClient("127.0.0.1", 57120)
+    c = ff.genBlock(b, 4)
+    triad = c[1]
+    client.send_message("/triad", triad[1:])
+def five_chord():
+    client = udp_client.SimpleUDPClient("127.0.0.1", 57120)
+    c = ff.genBlock(b, 5)
+    triad = c[1]
+    client.send_message("/triad", triad[1:])
+def six_chord():
+    client = udp_client.SimpleUDPClient("127.0.0.1", 57120)
+    c = ff.genBlock(b, 6)
+    triad = c[1]
+    client.send_message("/triad", triad[1:])
+def seven_chord():
+    client = udp_client.SimpleUDPClient("127.0.0.1", 57120)
+    c = ff.genBlock(b, 7)
+    triad = c[1]
+    client.send_message("/triad", triad[1:])
+def eight_chord():
+    client = udp_client.SimpleUDPClient("127.0.0.1", 57120)
+    c = ff.genBlock(b, 8)
+    triad = c[1]
+    client.send_message("/triad", triad[1:])
         
 # --------- Tkinter Widgets ---------------------------
 
 ScaleOption =   OptionMenu(inputFrame, variable, "TET", "Just", "Pythagorean")
 freqLabel =     Label(inputFrame, text="Frequency:")
 scaleLabel =    Label(inputFrame, text="Choose Scale:")
+freqColumn =    Label(freqList, text="Major Scale")
+newColumn =     Label(freqList, text="New Scale")
+centsColumn =   Label(freqList, text="Cents")
+
 numEntry =      Entry(inputFrame, width=10)
 OctaveDivider = Entry(inputFrame, width=10, state=DISABLED)
 showButton =    Button(inputFrame, text="Show", command=addToList, state=DISABLED)
-status = Label(root, text="Welcome!", bd=1, relief=SUNKEN, anchor=W)
+status =        Label(root, text="Welcome!", bd=1, relief=SUNKEN, anchor=W)
 
-one =   Button(chordButtons, text="I", width=8, height=3).grid(row=0, column=0)
-two =   Button(chordButtons, text="II", width=8, height=3).grid(row=0, column=1)
-three = Button(chordButtons, text="III", width=8, height=3).grid(row=0, column=2)
-four =  Button(chordButtons, text="IV", width=8, height=3).grid(row=0, column=3)
-five =  Button(chordButtons, text="V", width=8, height=3).grid(row=1, column=0)
-six =   Button(chordButtons, text="VI", width=8, height=3).grid(row=1, column=1)
-seven = Button(chordButtons, text="VII", width=8, height=3).grid(row=1, column=2)
-eight = Button(chordButtons, text="VIII", width=8, height=3).grid(row=1, column=3)
+one =   Button(chordButtons, text="I", command=one_chord, width=8, height=3)
+two =   Button(chordButtons, text="II", command=two_chord, width=8, height=3)
+three = Button(chordButtons, text="III", command=three_chord, width=8, height=3)
+four =  Button(chordButtons, text="IV", command=four_chord, width=8, height=3)
+five =  Button(chordButtons, text="V", command=five_chord, width=8, height=3)
+six =   Button(chordButtons, text="VI", command=six_chord, width=8, height=3)
+seven = Button(chordButtons, text="VII", command=seven_chord, width=8, height=3)
+eight = Button(chordButtons, text="VIII", command=eight_chord, width=8, height=3)
 
-soloMajor = Radiobutton(sendOptions, text="12 TET", variable=v, value=1).pack(side=LEFT)
-soloNew = Radiobutton(sendOptions, text="New Scale", variable=v, value=2).pack(side=LEFT)
-Both = Radiobutton(sendOptions, text="Both", variable=v, value=3).pack(side=LEFT)
+soloMajor = Radiobutton(sendOptions, text="12 TET", variable=v, value=1)
+soloNew =   Radiobutton(sendOptions, text="New Scale", variable=v, value=2)
+Both =      Radiobutton(sendOptions, text="Both", variable=v, value=3)
 
 majScale = Listbox(freqList, width=10)
 newScale = Listbox(freqList, width=10)
@@ -138,11 +189,28 @@ OctaveDivider.grid(row=3, column=1)
 ScaleOption.grid(row=2, column=1)
 status.pack(side=BOTTOM, fill=X)
 
+one.grid(row=0, column=0)
+two.grid(row=0, column=1)
+three.grid(row=0, column=2)
+four.grid(row=0, column=3)
+five.grid(row=1, column=0)
+six.grid(row=1, column=1)
+seven.grid(row=1, column=2)
+eight.grid(row=1, column=3)
+
+soloMajor.pack(side=LEFT)
+soloNew.pack(side=LEFT)
+Both.pack(side=LEFT)
+
 # ---------------------- Frequency Scales --------------
 
-majScale.pack(side=LEFT, padx=5)
-newScale.pack(side=LEFT, padx=5)
-centsOff.pack(side=LEFT, padx=5)
+freqColumn.grid(row=0, column=0, padx = 5)
+newColumn.grid(row=0, column=1, padx = 5)
+centsColumn.grid(row=0, column=2, padx = 5)
+
+majScale.grid(row=1, column=0, padx = 5)
+newScale.grid(row=1, column=1, padx = 5)
+centsOff.grid(row=1, column=2, padx = 5)
 
 
 root.mainloop() 

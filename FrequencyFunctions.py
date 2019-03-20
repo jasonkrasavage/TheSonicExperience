@@ -72,12 +72,13 @@ def TETMajScale(frequency, octaveDivider):
     TTET = Create12TETChromatic(frequency)
     standard = StandardMajScale(TTET)
     newTET = TETChromaticScale(frequency, octaveDivider)
-    print(standard)
-    print(newTET)
+    #print(standard)
+    #print(newTET)
     newScale = np.array([])
     for i in range(len(standard)):
         freq = SecondLoop(standard[i], newTET)
         newScale = np.append(newScale, freq)
+    print(newScale)
     return newScale
 
 
